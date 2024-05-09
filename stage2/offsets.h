@@ -113,6 +113,38 @@
 
 #elif (FIRMWARE == 903 || FIRMWARE == 904) // FW 9.03/9.04
 
+// libkernel_sys.srpx
+// #define _scePthreadAttrInit_offset 0x0014190
+// #define _scePthreadAttrSetstacksize_offset 0x00141B0
+// #define _scePthreadCreate_offset 0x00145D0
+// #define _thr_initial_offset 0x8E830
+
+//kern
+// kbase + offset (offsets are not in theflow format)
+// #define vm_map_protect_p 0x00080B8B // same as 9.00
+// #define ptrace_p 0x41F4E5
+// #define ptrace_p2 0x41F9D1
+// #define disable_aslr_p 0x5F824
+// #define sceSblACMgrIsAllowedSystemLevelDebugging_p 0x0001D1C0 // same
+// #define kemem_2 0x37BF44
+// #define kemem_1 0x37BF3C
+// #define vm_map_lock_offset 0x0007BA30
+// #define vm_map_insert_offset 0x0007CD80
+// #define vm_map_unlock_offset 0x0007BAA0
+// #define malloc_offset 0x003017B0
+// #define free_offset 0x00301CE0
+// #define vm_map_lock_read_offset 0x0007BB80
+// #define vm_map_unlock_read_offset 0x0007BBD0
+// #define vm_map_lookup_entry_offset 0x0007C1C0
+// #define M_TEMP_offset 0x015621E0 
+// #define proc_rmem_offset 0x0041EB00
+// #define vm_map_findspace_offset 0x0007EC40
+// #define vm_map_delete_offset 0x0007E680
+// #define create_thread_offset 0x001ED670
+// #define all_proc_offset 0x01B946E0
+// #define sys_dynlib_dlsym_p 0x0023B67F
+// #define sys_dynlib_dlsym_p2 0x00221B40
+
 #define kdlsym_addr_Xfast_syscall 0xffffffff822001c0 // Identical to 9.00
 
 #define kdlsym_addr_printf 0xffffffff822b79e0
@@ -134,6 +166,14 @@
 #define kdlsym_addr_copyinstr_patch2 0xffffffff8247182f
 #define kdlsym_addr_copyinstr_patch3 0xffffffff82471860
 
+#define kdlsym_addr_kernel_map 0xffffffff84468d48
+#define kdlsym_addr_kmem_alloc 0xffffffff8257be70
+#define kdlsym_addr_kmem_free 0xffffffff8257c040
+
+#define kdlsym_addr_sceKernelSendNotificationRequest 0xffffffff8259fd30
+#define kdlsym_addr_vsprintf 0xffffffff822b7cb0
+#define kdlsym_addr_snprintf 0xffffffff822b7ce0
+#define kdlsym_addr_strlen 0xffffffff8250f0f0
 
 #elif (FIRMWARE == 950 || FIRMWARE == 960) // FW 9.50 / 9.60
 
