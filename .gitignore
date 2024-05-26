@@ -2,3 +2,6 @@ __pycache__/
 *.o
 *.elf
 *.bin
+build.sh
+run.sh
+PS4UPDATE.PUP

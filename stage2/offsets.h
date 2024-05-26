@@ -113,67 +113,128 @@
 
 #elif (FIRMWARE == 903 || FIRMWARE == 904) // FW 9.03/9.04
 
+#if ENABLE_DEBUG_MENU
+
+// ShellCore offsets
+#define enable_data_mount_patch 0x00321F2B
+#define enable_fpkg_patch 0x003DA06F
+#define fake_free_patch 0x00FD5BD1
+#define pkg_installer_patch 0x00A13101
+#define ext_hdd_patch 0x0061A66D
+#define debug_trophies_patch 0x00745809
+
+#define sceKernelIsGenuineCEX 0x0016F014
+#define sceKernelIsGenuineCEX_1 0x00864744
+#define sceKernelIsGenuineCEX_2 0x008B2232
+#define sceKernelIsGenuineCEX_3 0x00A2A254
+#define dipsw_libSceDipsw 0x0016F042
+#define dipsw_libSceDipsw_1 0x0024A4EB
+#define dipsw_libSceDipsw_2 0x00864772
+#define dipsw_libSceDipsw_3 0x00A2A282
+
+// debug menu libkernel_sys.prx
+#define sys_debug_menu 0x1D1C0 // Identical to 9.00
+#define sys_debug_menu_1 0x1D520 // Identical to 9.00
+
+#endif
+
 // libkernel_sys.srpx
-// #define _scePthreadAttrInit_offset 0x0014190
-// #define _scePthreadAttrSetstacksize_offset 0x00141B0
-// #define _scePthreadCreate_offset 0x00145D0
-// #define _thr_initial_offset 0x8E830
+#define _scePthreadAttrInit_offset 0x0014190 // Identical to 9.00
+#define _scePthreadAttrSetstacksize_offset 0x00141B0 // Identical to 9.00
+#define _scePthreadCreate_offset 0x145D0 // Identical to 9.00
+#define _thr_initial_offset 0x8E830 // Identical to 9.00
 
 //kern
+#define vm_map_protect_p 0x00080B8B // Identical to 9.00
+#define ptrace_p 0x41D455
+#define ptrace_p2 0x41D941
+#define disable_aslr_p 0x5F824 // Identical to 9.00
+#define sceSblACMgrIsAllowedSystemLevelDebugging_p 0x0001D1C0 // Identical to 9.00
+#define kemem_2 0x37A144
+#define kemem_1 0x37A13C
+#define vm_map_lock_offset 0x0007BA30 // Identical to 9.00
+#define vm_map_insert_offset 0x0007CD80 // Identical to 9.00
+#define vm_map_unlock_offset 0x0007BAA0 // Identical to 9.00
+#define malloc_offset 0x003017B0
+#define free_offset 0x00301970
+#define vm_map_lock_read_offset 0x0007BB80 // Identical to 9.00
+#define vm_map_unlock_read_offset 0x0007BBD0 // Identical to 9.00
+#define vm_map_lookup_entry_offset 0x0007C1C0 // Identical to 9.00
+#define M_TEMP_offset 0x0155E1E0
+#define proc_rmem_offset 0x0041CA70
+#define vm_map_findspace_offset 0x0007EC40 // Identical to 9.00
+#define vm_map_delete_offset 0x0007E680 // Identical to 9.00
+#define create_thread_offset 0x001ED620
+#define all_proc_offset 0x01B906E0
+#define sys_dynlib_dlsym_p 0x0023B34F
+#define sys_dynlib_dlsym_p2 0x00221810
+
+
+#if MODULE_DUMPER
+#define sceSblACMgrHasMmapSelfCapability 0x0008BC90
+#define sceSblACMgrIsAllowedToMmapSelf 0x0008BCB0
+#define sceSblAuthMgrIsLoadable 0x00168001
+#define depth_patch 0x003a9906
+// 0x3a98e1
+#endif
+// 0xFFFFFFFF825A98E1 - 0xFFFFFFFF82200000
+
 // kbase + offset (offsets are not in theflow format)
-// #define vm_map_protect_p 0x00080B8B // same as 9.00
-// #define ptrace_p 0x41F4E5
-// #define ptrace_p2 0x41F9D1
-// #define disable_aslr_p 0x5F824
-// #define sceSblACMgrIsAllowedSystemLevelDebugging_p 0x0001D1C0 // same
-// #define kemem_2 0x37BF44
-// #define kemem_1 0x37BF3C
-// #define vm_map_lock_offset 0x0007BA30
-// #define vm_map_insert_offset 0x0007CD80
-// #define vm_map_unlock_offset 0x0007BAA0
-// #define malloc_offset 0x003017B0
-// #define free_offset 0x00301CE0
-// #define vm_map_lock_read_offset 0x0007BB80
-// #define vm_map_unlock_read_offset 0x0007BBD0
-// #define vm_map_lookup_entry_offset 0x0007C1C0
-// #define M_TEMP_offset 0x015621E0 
-// #define proc_rmem_offset 0x0041EB00
-// #define vm_map_findspace_offset 0x0007EC40
-// #define vm_map_delete_offset 0x0007E680
-// #define create_thread_offset 0x001ED670
-// #define all_proc_offset 0x01B946E0
-// #define sys_dynlib_dlsym_p 0x0023B67F
-// #define sys_dynlib_dlsym_p2 0x00221B40
+// #define vm_map_protect_p 0x00080B8B // Identical to 9.00
+// #define ptrace_p 0x41D455 // Different
+// #define ptrace_p2 0x41D941 // Different
+// #define disable_aslr_p 0x5F824 // Identical 9.00
+// #define sceSblACMgrIsAllowedSystemLevelDebugging_p 0x0001D1C0 // Identical to 9.00
+// #define kemem_2 0x37A144 // Different
+// #define kemem_1 0x37A13C // Different
+// #define vm_map_lock_offset 0x0007BA30 // Identical 9.00
+// #define vm_map_insert_offset 0x0007CD80 // Identical 9.00
+// #define vm_map_unlock_offset 0x0007BAA0 // Identical 9.00
+// #define malloc_offset 0x003017B0 // Different
+// #define free_offset 0x00301970 // Different
+// #define vm_map_lock_read_offset 0x0007BB80 // Identical to 9.00
+// #define vm_map_unlock_read_offset 0x0007BBD0 // Identical to 9.00
+// #define vm_map_lookup_entry_offset 0x0007C1C0 // Identical to 9.00
+// #define M_TEMP_offset 0x0155E1E0 // Different 
+// #define proc_rmem_offset 0x0041CA70 // Different 
+// #define vm_map_findspace_offset 0x0007EC40 // Identical to 9.00
+// #define vm_map_delete_offset 0x0007E680 // Identical to 9.00
+// #define create_thread_offset 0x001ED620 // Different 
+// #define all_proc_offset 0x01B906E0 // Different
+// #define sys_dynlib_dlsym_p 0x0023B34F // Different
+// #define sys_dynlib_dlsym_p2 0x00221810 // Different
+
+// #endif
 
 #define kdlsym_addr_Xfast_syscall 0xffffffff822001c0 // Identical to 9.00
 
-#define kdlsym_addr_printf 0xffffffff822b79e0
+#define kdlsym_addr_printf 0xffffffff822b79e0 // Different
 
-#define kdlsym_addr_sysent 0xffffffff832fc310
+#define kdlsym_addr_sysent 0xffffffff832fc310 // Different
 
 #define kdlsym_addr_amd_syscall_patch1 0xffffffff82200490 // Identical to 9.00
 #define kdlsym_addr_amd_syscall_patch2 0xffffffff822004b5 // Identical to 9.00
 #define kdlsym_addr_amd_syscall_patch3 0xffffffff822004b9 // Identical to 9.00
 #define kdlsym_addr_amd_syscall_patch4 0xffffffff822004c2 // Identical to 9.00
 
-#define kdlsym_addr_copyin_patch1 0xffffffff82471377
-#define kdlsym_addr_copyin_patch2 0xffffffff82471383
+#define kdlsym_addr_copyin_patch1 0xffffffff82471377 // Different
+#define kdlsym_addr_copyin_patch2 0xffffffff82471383 // Different
 
-#define kdlsym_addr_copyout_patch1 0xffffffff82471282
-#define kdlsym_addr_copyout_patch2 0xffffffff8247128e
+#define kdlsym_addr_copyout_patch1 0xffffffff82471282 // Different
+#define kdlsym_addr_copyout_patch2 0xffffffff8247128e // Different
 
-#define kdlsym_addr_copyinstr_patch1 0xffffffff82471823
-#define kdlsym_addr_copyinstr_patch2 0xffffffff8247182f
-#define kdlsym_addr_copyinstr_patch3 0xffffffff82471860
+#define kdlsym_addr_copyinstr_patch1 0xffffffff82471823 // Different
+#define kdlsym_addr_copyinstr_patch2 0xffffffff8247182f // Different
+#define kdlsym_addr_copyinstr_patch3 0xffffffff82471860 // Different
 
-#define kdlsym_addr_kernel_map 0xffffffff84468d48
-#define kdlsym_addr_kmem_alloc 0xffffffff8257be70
-#define kdlsym_addr_kmem_free 0xffffffff8257c040
+// #define kdlsym_addr_kernel_map 0xffffffff84468d48
+// #define kdlsym_addr_kmem_alloc 0xffffffff8257be70
+// #define kdlsym_addr_kmem_free 0xffffffff8257c040
 
-#define kdlsym_addr_sceKernelSendNotificationRequest 0xffffffff8259fd30
-#define kdlsym_addr_vsprintf 0xffffffff822b7cb0
-#define kdlsym_addr_snprintf 0xffffffff822b7ce0
-#define kdlsym_addr_strlen 0xffffffff8250f0f0
+// #define kdlsym_addr_sceKernelSendNotificationRequest 0xffffffff8259fd30
+// #define kdlsym_addr_vsprintf 0xffffffff822b7cb0
+// #define kdlsym_addr_snprintf 0xffffffff822b7ce0
+// #define kdlsym_addr_strlen 0xffffffff8250f0f0
 
 #elif (FIRMWARE == 950 || FIRMWARE == 960) // FW 9.50 / 9.60
 
